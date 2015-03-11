@@ -2,8 +2,12 @@ package com.example.kdiaziglesias.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MiBaseDatos extends SQLiteOpenHelper {
@@ -62,7 +66,37 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         db.close();
     }
 
+    public Contactos recuperarCONTACTO(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] valores_recuperar = {"_id", "nombre", "telefono", "email"};
+        Cursor c = db.query("contactos", valores_recuperar, "_id=" + id,
+                null, null, null, null, null);
+        if(c != null) {
+            c.moveToFirst();
+        }
+        Contactos contactos = new Contactos(c.getInt(0), c.getString(1),
+                c.getInt(2), c.getString(3));
+        db.close();
+        c.close();
+        return contactos;
+    }
 
+    public List<Contactos> recuperarCONTACTOS() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Contactos> lista_contactos = new ArrayList<Contactos>();
+        String[] valores_recuperar = {"_id", "nombre", "telefono", "email"};
+        Cursor c = db.query("contactos", valores_recuperar,
+                null, null, null, null, null, null);
+        c.moveToFirst();
+        do {
+            Contactos contactos = new Contactos(c.getInt(0), c.getString(1),
+                    c.getInt(2), c.getString(3));
+            lista_contactos.add(contactos);
+        } while (c.moveToNext());
+        db.close();
+        c.close();
+        return lista_contactos;
+    }
 
 
 }

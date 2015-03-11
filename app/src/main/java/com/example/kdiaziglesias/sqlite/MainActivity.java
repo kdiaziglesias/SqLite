@@ -1,7 +1,7 @@
 package com.example.kdiaziglesias.sqlite;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +12,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MiBaseDatos MDB = new MiBaseDatos(getApplicationContext());
+
+        MDB.insertarCONTACTO(1,"Pedro",1111111,"pedro@DB.es");
+        MDB.insertarCONTACTO(2,"Sandra",2222222,"sandra@DB.es");
+        MDB.insertarCONTACTO(3,"Maria",1111111,"Maria@DB.es");
+        MDB.insertarCONTACTO(4,"Daniel",1111111,"daniel@DB.es");
+
+        //Log.d("Total",Integer.toString(MDB.));
+
+
     }
 
 
